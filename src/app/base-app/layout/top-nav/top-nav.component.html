@@ -1,0 +1,39 @@
+<mat-toolbar color="primary" class="fix-nav top-nav-custom">
+  <button type="button" mat-icon-button (click)="toggleSidebar()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <div class="nav-brand">
+    <img width="54px" src="/assets/icons/loader_logo.png" style="border-radius: 10px;" />
+  </div>
+  <span class="nav-spacer"></span>
+  <div *ngIf="oidcSecurityService.userData$ | async as user" [matMenuTriggerFor]="userMenu">
+    <div class="user-profile">
+      <p class="user-profile-inner">
+        {{user?.userData?.given_name.charAt(0).toUpperCase()
+        + user?.userData?.family_name.charAt(0).toUpperCase()}}
+      </p>
+    </div>
+  </div>
+
+  <mat-menu class="custom-panel" #userMenu="matMenu" [overlapTrigger]="false">
+    <div fxLayout="row" fxLayoutAlign="start center" *ngIf="oidcSecurityService.userData$ | async as user" mat-menu-item
+      class="profile-menu-item">
+      <div class="user-profile">
+        <div class="user-profile-inner" style="color: white">
+          {{user?.userData?.given_name.charAt(0).toUpperCase()
+          + user?.userData?.family_name.charAt(0).toUpperCase()}}
+        </div>
+      </div>
+      <span>{{user?.userData?.name }}</span>
+    </div>
+    <button class="button-menu-item" mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Mon Compte</span>
+    </button>
+    <button class="button-menu-item" mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Déconnexion</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

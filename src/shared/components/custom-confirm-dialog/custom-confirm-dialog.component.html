@@ -1,0 +1,20 @@
+<mat-toolbar [color]="data.color">
+  <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="text-center title dialog-title">{{ data.title }} </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div mat-dialog-content style="padding: 24px 0px 0px 0px;">
+  <div fxLayout="row" fxLayoutAlign="center center" class="text-center">
+    <img  src="/assets/icons/alert.png" />
+  </div>
+  
+  <h2 class="text-center px-24"> {{ data.message }} </h2>
+</div>
+<div class="text-center" mat-dialog-actions style="padding: 16px; margin: 0px;" fxLayoutAlign="center center">
+  <button style="margin-right: 8px;" mat-raised-button (click)="onCancel()">
+    Annuler
+  </button>
+  <button mat-raised-button color="warn" (click)="onConfirm()">
+      Confirmer
+  </button>
+</div>

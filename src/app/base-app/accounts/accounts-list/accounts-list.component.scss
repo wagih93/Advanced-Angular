@@ -1,0 +1,22 @@
+app-accounts-list {
+  table {
+    width: 100%;
+  }
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0 0.75em 0 0.75em;
+    margin-top: -0.25em;
+    position: relative;
+  }
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-form-field-outline-start {
+    border-radius: 24px 0 0 24px !important;
+    background-color: white;
+    min-width: 28px !important;
+  }
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-form-field-outline-end {
+    border-radius: 0 24px 24px 0 !important;
+    background-color: white;
+  }
+}

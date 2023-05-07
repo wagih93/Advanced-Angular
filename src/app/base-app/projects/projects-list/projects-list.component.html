@@ -1,0 +1,29 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="ml10">
+    <img width="40" src="/assets/icons/projects.png" />
+    <span class="page-title">Projets</span>
+</div>
+<div class="mb20" flexLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="utilsService.getUserRole(connectedUser) > 0" mat-raised-button color="primary" (click)="createProject()">
+        Nouveau projet
+        <mat-icon>add_outline</mat-icon>
+    </button>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div class="container" fxFlex="25%" fxFlex.lg="33%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="stretch"
+        *ngFor="let project of projects">
+        <mat-card appearance="outlined" class="project-card" (click)="getProjectDetails(project.id)">
+            <div fxLayout="row" fxLayoutAlign="start center" class="mb10">
+                <div class="project-logo">
+                    <p class="project-logo-inner">
+                        {{project.name!.charAt(0)}}
+                    </p>
+                </div>
+                <mat-card-title>
+                    {{project.name}}
+                </mat-card-title>
+            </div>
+            <mat-card-subtitle>{{project.description}}</mat-card-subtitle>
+        </mat-card>
+    </div>
+</div>

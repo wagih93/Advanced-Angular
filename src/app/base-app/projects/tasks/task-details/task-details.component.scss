@@ -1,0 +1,13 @@
+.task-details-dialog {
+    width: 940px;
+
+    .mat-mdc-dialog-container {
+        padding: 0;
+    }
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+}

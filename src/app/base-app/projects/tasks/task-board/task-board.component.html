@@ -1,0 +1,72 @@
+<div *ngIf="project" fxLayout="row" fxLayoutAlign="start center" class="ml10">
+    <button [routerLink]="'/projects/details/' + projectId" mat-icon-button color="primary" aria-label="back">
+        <mat-icon class="arrow-back-font">arrow_back</mat-icon>
+    </button>
+    <span class="page-title">{{project.name}} </span><img width="40" src="/assets/icons/board.png"/>
+</div>
+<div class="container root" *ngIf="project">
+    <div class="board">
+        <div class="add-taks-btn">
+            <button mat-mini-fab color="primary" (click)="openTaskForm()">
+                <mat-icon>add_outline</mat-icon>
+            </button>
+        </div>
+
+        <div class="board-wrapper">
+            <div class="board-columns">
+                <div cdkDropList cdkDropListOrientation="horizontal" class="board-columns"
+                    (cdkDropListDropped)="dropGrid($event)">
+                    <div cdkDragLockAxis="x" class="board-column"
+                        *ngFor="let column of board.columns; let index = index">
+                        <div class="column-title" cdkDragHandle>
+                            {{ column.name }} ({{ column.tasks.length }} )
+                        </div>
+                        <div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="columnsIds"
+                            cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
+                            <div class="task" *ngIf="index == 0 && openNewTaskForm">
+                                <textarea class="new-task" (keydown.enter)="onFocusOut()" (focusout)='onFocusOut()'
+                                    [(ngModel)]='taskContent' #newTaskInput matInput type="text" style="width:100%;">
+                                </textarea>
+                            </div>
+                            <div class="task" *ngFor="let task of column.tasks" cdkDrag>
+                                <button class="mybuttonoverlap" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_horizontal</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" class="custom-actions-panel">
+                                    <button mat-menu-item (click)="openTaskDetails(task)">
+                                        <mat-icon color="primary">visibility</mat-icon>
+                                        <span>Ouvrir</span>
+                                    </button>
+                                    <button color="warn" mat-menu-item (click)="deleteTask(task.id)">
+                                        <mat-icon color="warn">delete_outline</mat-icon>
+                                        <span>Supprimer</span>
+                                    </button>
+                                </mat-menu>
+                                <div fxFlex fxLayout="column" fxLayoutAlin="start">
+                                    <span class="task-title" (click)="openTaskDetails(task)">{{ task.name }}</span>
+                                    <div class="mt10" fxLayout="row" fxLayoutAlign="space-between center">
+                                        <span style="font-weight:500">Statut</span>
+                                        <span class="state-badge">{{ task.status.name }}</span>
+                                    </div>
+                                    <div *ngIf="task.assignedTo" class="mt10" fxLayout="row"
+                                        fxLayoutAlign="start center">
+                                        <div class="circle">
+                                            <p class="circle-inner">
+                                                {{task.assignedTo?.firstName.charAt(0) +
+                                                task.assignedTo?.lastName.charAt(0)}}
+                                            </p>
+                                        </div>
+                                        <span style="font-weight: 500;">{{ task.assignedTo?.firstName+ " "+ task.assignedTo?.lastName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-access-unauthorized [display]="userNotAuthorized" [redirectUrlLabel]="'Projects'" [redirectUrl]="'/projects'"></app-access-unauthorized>

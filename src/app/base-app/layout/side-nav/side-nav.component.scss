@@ -1,0 +1,79 @@
+@import "../../../../scss/_variables";
+
+.mat-mdc-nav-list {
+  width: 100%;
+  div {
+    font-size: large;
+    font-weight: 500;
+    padding: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 66px !important;
+    display: block;
+  }
+}
+
+.nested-menu {
+  .nested {
+    list-style-type: none;
+  }
+
+  .submenu {
+    display: none;
+    height: 0;
+  }
+
+  & .expand {
+    &.submenu {
+      display: block;
+      list-style-type: none;
+      height: auto;
+      margin: 0;
+
+      li {
+        a {
+          padding: 10px;
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.mat-expansion-panel-body {
+  padding: 0px !important;
+}
+
+mat-sidenav-container > mat-sidenav {
+  padding: 0px !important;
+}
+
+mat-expansion-panel {
+  box-shadow: none !important;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.15) !important;
+  border-bottom-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+mat-expansion-panel-header {
+  padding: 0px 24px !important;
+  height: 70px !important;
+}
+
+mat-sidenav-container > mat-sidenav {
+  border-right: 1px solid #ddd !important;
+}
+
+.mat-expansion-panel-spacing {
+  margin: 0px !important;
+}
+
+.active {
+  background-color: #def5e5;
+}
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 18px;
+}

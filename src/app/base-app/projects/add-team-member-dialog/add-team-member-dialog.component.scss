@@ -1,0 +1,38 @@
+.team-members-dialog {
+    width: 940px;
+
+    .mat-mdc-dialog-container {
+        padding: 0;
+    }
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.member-avatar {
+    display: inline-block;
+    background-color: #498359;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.member-avatar-inner {
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    height: 30px;
+    width: 30px;
+    font-size: 12px;
+}
+
+.team-members {
+    height: 300px;
+    max-height: 300px;
+    min-height: 300px;
+    overflow-y: auto;
+}

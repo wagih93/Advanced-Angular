@@ -1,0 +1,160 @@
+<div class="toolbar-container">
+  <div flexLayout="row" fxLayoutAlign="end center">
+    <mat-form-field appearance="outline" fxFlex="25" class="search-input">
+      <mat-icon matPrefix svgIcon="loop-icon"></mat-icon>
+      <input matInput placeholder="Rechercher" type="text" [(ngModel)]="searchInput" (input)="getManufacturingOrders()">
+      <button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear"
+        (click)="searchInput='';getManufacturingOrders()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div flexLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <span class="page-title">Suivi de la productivité</span>
+      <button class="toolbar-btn" mat-raised-button color="primary"
+        (click)="manageManufacturingOrder('new', undefined)">
+        Nouvel enregistrement
+        <mat-icon>add_outline</mat-icon>
+      </button>
+    </div>
+    <div>
+
+      <!-- Export Menu -->
+      <button (click)="checkSelection()" mat-icon-button [matMenuTriggerFor]="exportMenu"
+        aria-label="Example icon-button with a menu">
+        <mat-icon svgIcon="export-icon"></mat-icon>
+      </button>
+      <mat-menu #exportMenu="matMenu">
+        <button (click)="saveExcel()" mat-menu-item>
+          <mat-icon svgIcon="export-icon"></mat-icon>
+          <span>Exporter la page</span>
+        </button>
+
+        <button (click)="saveExcel(true)" mat-menu-item [disabled]="noSelection">
+          <mat-icon>checklist</mat-icon>
+          <span>Exporter la selection</span>
+        </button>
+      </mat-menu>
+      <!-- Export Menu -->
+
+      <!-- Print Menu -->
+      <button (click)="checkSelection()" mat-icon-button [matMenuTriggerFor]="printMenu"
+        aria-label="Example icon-button with a menu">
+        <mat-icon svgIcon="print-icon"></mat-icon>
+      </button>
+      <mat-menu #printMenu="matMenu">
+        <button (click)="printData()" mat-menu-item>
+          <mat-icon svgIcon="export-icon"></mat-icon>
+          <span>Imprimer la page</span>
+        </button>
+
+        <button (click)="printData(true)" mat-menu-item [disabled]="noSelection">
+          <mat-icon>checklist</mat-icon>
+          <span>Imprimer la selection</span>
+        </button>
+      </mat-menu>
+      <!-- Print Menu -->
+
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="manufacturingorders.length > 0">
+  <table class="mat-elevation-z1 custom-table" mat-table matSort [dataSource]="dataSource"
+    (matSortChange)="sortChanged($event)">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let order">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(order) : null"
+          [checked]="selection.isSelected(order)" [aria-label]="checkboxLabel(order)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let order"> {{order.created | date: "yyyy-MM-dd"}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="BatchNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Lot
+        <!-- Print Menu -->
+        <button (click)="onFilterButtonClicked($event)" mat-icon-button [matMenuTriggerFor]="printMenu"
+          aria-label="Example icon-button with a menu">
+          <mat-icon svgIcon="filter-icon"></mat-icon>
+        </button>
+        <mat-menu #printMenu="matMenu">
+          <button (click)="printData()" mat-menu-item>
+            <mat-icon svgIcon="export-icon"></mat-icon>
+            <span>Imprimer la page</span>
+          </button>
+
+          <button (click)="printData(true)" mat-menu-item [disabled]="noSelection">
+            <mat-icon>checklist</mat-icon>
+            <span>Imprimer la selection</span>
+          </button>
+        </mat-menu>
+        <!-- Print Menu -->
+      </th>
+      <td mat-cell *matCellDef="let order"> {{order.batchNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Product.Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+      <td mat-cell *matCellDef="let order"> {{order.product?.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ProductionLine.Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ligne </th>
+      <td mat-cell *matCellDef="let order"> {{order.productionLine?.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Team.Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Groupe </th>
+      <td mat-cell *matCellDef="let order"> {{order.team?.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Team.Number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Num Groupe </th>
+      <td mat-cell *matCellDef="let order"> {{order.team?.number}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Quantity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Objectif </th>
+      <td mat-cell *matCellDef="let order"> {{order.quantity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Owner.Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Propriétaire </th>
+      <td mat-cell *matCellDef="let order"> {{order.owner?.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td class="text-right" mat-cell *matCellDef="let user">
+        <button mat-icon-button (click)="manageManufacturingOrder('edit', user)">
+          <mat-icon color="primery">edit</mat-icon>
+        </button>
+        <button *ngIf="user.userId != currentUser?.sub" mat-icon-button (click)="deleteManufacturingOrder(user)">
+          <mat-icon color="warn">delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+
+  </table>
+
+  <mat-paginator class="custom-table mat-elevation-z1" (page)="pageChanged($event)" [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize" [showFirstLastButtons]="true" [length]="length"></mat-paginator>
+</ng-container>

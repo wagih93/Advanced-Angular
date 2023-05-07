@@ -1,0 +1,101 @@
+@import '../../../../scss/variables';
+
+:host {
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-brand {
+  text-align: center;
+  padding-top: 8px;
+  margin-left: 38px;
+}
+
+.topnav-icon {
+  text-decoration: none;
+  display: flex;
+  color: $white;
+}
+
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+.visible-md {
+  display: none;
+}
+
+.visible-sm {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .visible-md {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .visible-sm {
+    display: block;
+  }
+
+  .nav-brand {
+    width: 100%;
+    padding-top: 8px;
+    margin-left: 0px;
+
+    img {
+      width: 50px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hidden-sm {
+    display: none;
+  }
+}
+
+.top-nav-custom {
+  // background-color: #FFFFFF;
+  // color: #1B194B;
+  // box-shadow: inset 0px -1px 0px #E9EBF0;
+}
+
+.user-profile {
+  display: inline-block;
+  background-color: #498359;
+  border-radius: 50%;
+  margin: 12px;
+  cursor: pointer;
+}
+
+.user-profile-inner {
+  color: white !important;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  height: 48px !important;
+  width: 48px !important;
+  font-size: 20px;
+  color: black
+}
+
+::ng-deep .custom-panel {
+  min-width: 280px !important;
+  border-radius: 30px !important;
+}
+
+::ng-deep .button-menu-item.button-menu-item {
+  padding-left: 28px;
+}
+
+.profile-menu-item {
+  height: 80px !important;
+}

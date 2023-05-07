@@ -1,0 +1,58 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar>
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <input [(ngModel)]="task.name" matInput />
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div mat-dialog-content style="padding: 24px; margin:0;">
+        <form fxLayout="column" #f="ngForm" name="taskForm">
+            <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex="49%" appearance="outline">
+                    <mat-label>Assigner à</mat-label>
+                    <mat-select #matRef [formControl]="userServerSideCtrl" placeholder="Assign User">
+                      <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+                      <mat-option>
+                        <ngx-mat-select-search 
+                            [formControl]="userServerSideFilteringCtrl"
+                            placeholderLabel="Rechercher utilisateur"
+                            noEntriesFoundLabel="Aucun utlisateur n'a été trouvée" 
+                            [searching]="searching">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                      <mat-option *ngFor="let user of filteredServerSideUsers | async" [value]="user.id">
+                        {{user.firstName}} {{user.lastName}}
+                      </mat-option>
+                    </mat-select>
+                    <div matSuffix>
+                      <mat-icon (click)="clear($event)">clear</mat-icon>
+                    </div>
+                  </mat-form-field>
+
+                <mat-form-field fxFlex="49%" appearance="outline">
+                    <mat-label>Statut</mat-label>
+                    <mat-select name="statusColumns" [(ngModel)]="task.status.id">
+                      <mat-option *ngFor="let status of statusColumns" [value]="status.id">
+                        {{ status.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Déscription</mat-label>
+                <textarea [(ngModel)]="task.description" placeholder="Déscription" matInput name="description" rows="7">
+                </textarea>
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions style="padding: 16px; margin: 0px;" class="m-0 p-16" fxLayout="row"
+        fxLayoutAlign="end center">
+        <div>
+            <button mat-raised-button color="primary" (click)="updateTask()" [disabled]="!f.valid">
+                Enregistrer
+            </button>
+        </div>
+    </div>
+</div>

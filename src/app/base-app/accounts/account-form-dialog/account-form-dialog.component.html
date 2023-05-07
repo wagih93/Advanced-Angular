@@ -1,0 +1,76 @@
+<div class="dialog-content-wrapper fix-dialog">
+  <mat-toolbar class="mat-primary m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title"> {{ mode == 'new' ? 'Nouvel Utilisateur' : 'Modifier Utilisateur'}}</span>
+      <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content style="padding: 24px; margin:0;">
+    <form fxLayout="column" #f="ngForm" name="userForm">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input #lastName="ngModel" [(ngModel)]="user.lastName" placeholder="Nom" matInput name="lastName" required
+          minlength="3" />
+        <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+          Veuillez renseigner le nom d'utilisateur (3 caractères minimum) !
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Prénom</mat-label>
+        <input #firstName="ngModel" [(ngModel)]="user.firstName" placeholder="Prénom" matInput name="firstName" required
+          minlength="3" />
+        <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+          Veuillez renseigner le prénom d'utilisateur (3 caractères minimum) !
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select name="roles" [(ngModel)]="user.role">
+          <mat-option *ngFor="let role of roles" [value]="role.value">
+            {{ role.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [readonly]="mode==='edit'" #email="ngModel" [(ngModel)]="user.email" placeholder="Email" matInput
+          type="email" name="email" required minlength="3" />
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          Veuillez renseigner une adresse mail correcte
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="mode == 'new'">
+        <mat-label>Mot de passe</mat-label>
+        <input [pattern]="passwordRegex" #password="ngModel" [(ngModel)]="user.password" placeholder="mot de passe"
+          matInput name="password" required type="password" minlength="6" />
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+          Veuillez renseigner un mot de passe correct (supérieur ou égale à 8 caractères)
+        </mat-error>
+      </mat-form-field>
+      <ul *ngIf="mode == 'new'">
+        <li>At least 8 characters long</li>
+        <li>At least one lowercase letter</li>
+        <li>At least one uppercase letter</li>
+        <li>At least one digit</li>
+        <li>At least one special character from !@#$%^&*()_+</li>
+      </ul>
+
+    </form>
+  </div>
+  <div class="spacer"></div>
+  <div mat-dialog-actions style="padding: 16px; margin: 0px;" class="m-0 p-16" fxLayout="row"
+    fxLayoutAlign="end center">
+    <div>
+      <button mat-raised-button color="primary" (click)="manageAccount()" [disabled]="!f.valid">
+        {{ mode == 'new' ? 'Créer' : 'Modifier'}}
+      </button>
+    </div>
+  </div>
+</div>

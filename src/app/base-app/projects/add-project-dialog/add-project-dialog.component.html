@@ -1,0 +1,50 @@
+<div class="dialog-content-wrapper fix-dialog">
+    <mat-toolbar class="mat-primary m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title"> {{ mode == 'new' ? 'Nouveau Projet' : 'Modifier Projet'}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div mat-dialog-content style="padding: 24px; margin:0;">
+        <form fxLayout="column" #f="ngForm" name="projectForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Nom du projet</mat-label>
+                <input #name="ngModel" [(ngModel)]="project.name" placeholder="Nom du project" matInput name="name"
+                    required minlength="3" />
+                <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+                    Veuillez renseigner le nom d'utilisateur (3 caractères minimum) !
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Déscription</mat-label>
+                <textarea #description="ngModel" [(ngModel)]="project.description" placeholder="Déscription" matInput
+                    name="description" required minlength="3" rows="7">
+                </textarea>
+                <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">
+                    Veuillez renseigner le prénom d'utilisateur (3 caractères minimum) !
+                </mat-error>
+            </mat-form-field>
+
+            <div class="text-center">
+                <mat-radio-group aria-label="Visibility" [(ngModel)]="project.visibility" name="visibility">
+                    <mat-radio-button class="mr10" *ngFor="let visibility of visibilities" [value]="visibility.value">
+                        {{ visibility.name }}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+        </form>
+    </div>
+    <div class="spacer"></div>
+    <div mat-dialog-actions style="padding: 16px; margin: 0px;" class="m-0 p-16" fxLayout="row"
+        fxLayoutAlign="end center">
+        <div>
+            <button mat-raised-button color="primary" (click)="manageProject()" [disabled]="!f.valid">
+                {{ mode == 'new' ? 'Créer' : 'Modifier'}}
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div fxLayout="column" *ngIf="display" class="user-not-authorized">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <img src="/assets/icons/unauthorized.png"/>
+    </div>
+    <br>
+    <h1 fxLayout="row" fxLayoutAlign="center center">
+        {{message}}
+    </h1>
+    <div class="projects-link" [routerLink]="redirectUrl" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon color="primary">arrow_back</mat-icon>
+        <div>{{redirectUrlLabel}}</div>
+    </div>
+</div>

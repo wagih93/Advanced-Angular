@@ -1,0 +1,57 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span>Add team member</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div mat-dialog-content style="padding: 24px; margin:0;">
+        <div fxLayout="column">
+
+            <div fxLayout="row" fxFlex fxLayoutAlign="space-between start">
+                <div fxFlex="49%" fxLayout="column" fxLayoutAlign="stretch">
+                    <h2>Members ({{project.team.length}})</h2>
+                    <mat-card appearance="outlined" class="team-members">
+                        <mat-card-content>
+                            <div *ngFor="let member of project.team" fxLayout="row" fxLayoutAlign="space-between center"
+                                style="padding: 12px">
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <div class="member-avatar">
+                                        <p class="member-avatar-inner">
+                                            {{member!.firstName!.charAt(0) +
+                                            member!.lastName!.charAt(0)}}
+                                        </p>
+                                    </div>
+                                    {{member.firstName}} {{member.lastName}}
+                                </div>
+                                <button color="warn" mat-icon-button (click)="removeMember(member)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <mat-form-field fxFlex="49%" appearance="outline">
+                    <mat-label>Members</mat-label>
+                    <mat-select (selectionChange)="addMember()" [formControl]="userServerSideCtrl"
+                        placeholder="Add member">
+                        <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+                        <mat-option>
+                            <ngx-mat-select-search 
+                                [formControl]="userServerSideFilteringCtrl"
+                                placeholderLabel="Rechercher utilisateur"
+                                noEntriesFoundLabel="Aucun utlisateur n'a été trouvée" 
+                                [searching]="searching">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let user of filteredServerSideUsers | async" [value]="user">
+                            {{user.firstName}} {{user.lastName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

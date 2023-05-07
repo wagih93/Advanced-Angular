@@ -1,0 +1,17 @@
+.user-form-dialog {
+  width: 640px;
+
+  .mat-mdc-dialog-container {
+    padding: 0;
+  }
+}
+
+.fix-dialog {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  flex-grow: 1;
+}

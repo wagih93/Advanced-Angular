@@ -1,0 +1,161 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@import "./scss/utils";
+@import "./scss/variables";
+@import "./scss/responsive";
+
+.page-title {
+  margin: 16px 10px;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.arrow-back-font {
+  font-size: 35px;
+}
+
+.container {
+  animation: animation-name 0.1s ease-out forwards;
+}
+
+@keyframes animation-name {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.mat-drawer-content {
+  background: #f7f7f9;
+}
+
+.custom-table {
+  background-color: transparent !important;
+  box-shadow: none;
+  .mat-mdc-paginator-container {
+    justify-content: center !important;
+    button{
+      order: -1 !important;
+    }
+  }
+  .mat-mdc-paginator-page-size-label{
+    display: none;
+  }
+  th {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 24px;
+    color: #b49c30;
+    height: 49px;
+    background: #ffffff;
+    border-top: 1px solid #d7c7c7;
+    border-bottom: 1px solid #d7c7c7;
+  }
+  th:first-child {
+    border-left: 1px solid #d7c7c7;
+    border-top-left-radius: 28px;
+    border-bottom-left-radius: 28px;
+  }
+  th:last-child {
+    border-right: 1px solid #d7c7c7;
+    border-top-right-radius: 28px;
+    border-bottom-right-radius: 28px;
+  }
+  .mat-mdc-row:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  td {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+  }
+  td:first-child {
+    border-top-left-radius: 28px;
+    border-bottom-left-radius: 28px;
+  }
+  td:last-child {
+    border-top-right-radius: 28px;
+    border-bottom-right-radius: 28px;
+  }
+
+  th,
+  td {
+    text-align: center !important;
+  }
+  .mat-sort-header-container {
+    place-content: center !important;
+  }
+}
+.search-input.mat-mdc-form-field {
+  .mat-mdc-form-field-flex {
+    height: 45px !important;
+  }
+  .mat-mdc-form-field-infix {
+    padding-bottom: 0px;
+    padding-top: 12px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #a7a7a9;
+  }
+  .mat-mdc-text-field-wrapper {
+    background-color: #ffffff;
+    border-radius: 26px;
+  }
+  .mdc-notched-outline__trailing {
+    border: 1px solid #e1e3e8;
+    border-left: none;
+  }
+  .mdc-notched-outline__leading {
+    border: 1px solid #e1e3e8;
+    border-radius: 26px 0px 0px 26px !important;
+    width: 26px !important;
+    border-right: none;
+  }
+  .mdc-notched-outline__trailing {
+    border-radius: 0px 26px 26px 0px !important;
+  }
+}
+.toolbar-container {
+  padding-bottom: 10px;
+  .page-title {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 24px;
+    color: #333333;
+  }
+  .toolbar-btn {
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: 41px;
+    background: #b49c30 !important;
+    border-radius: 20.5px;
+  }
+}

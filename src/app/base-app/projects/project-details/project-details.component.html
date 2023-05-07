@@ -1,0 +1,64 @@
+<div *ngIf="project" fxLayout="row" fxLayoutAlign="start center" class="ml10">
+    <button [routerLink]="'/projects'" mat-icon-button color="primary" aria-label="back">
+        <mat-icon class="arrow-back-font">arrow_back</mat-icon>
+    </button>
+
+    <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+        <span class="page-title"> {{project.name}}</span>
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <span [matTooltip]="project.visibility == 1 ? 'Partagé avec les membres du projet' : ''" fxLayoutAlign="center center" class="visibility-badge" [ngStyle]="{'background-color': project.visibility == 0 ? 'green' : 'red' }">
+                {{project.visibilityString}}
+                <mat-icon *ngIf="project.visibility == 0" class="ml5">lock_open</mat-icon>
+                <mat-icon *ngIf="project.visibility == 1" class="ml5">lock_closed</mat-icon>
+            </span>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="container" *ngIf="project" fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div fxFlex="58%">
+        <mat-card appearance="outlined">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title>About Project</mat-card-title>
+                <button *ngIf="utilsService.getUserRole(connectedUser) > 0" mat-icon-button (click)="openEditProjectDialog()">
+                    <mat-icon color="accent">edit</mat-icon>
+                </button>
+            </div>
+            <mat-card-subtitle>{{project.name}}</mat-card-subtitle>
+            <mat-card-content>
+                {{project.description}}
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button mat-icon-button [routerLink]="'/projects/board/' + projectId">
+                    <mat-icon color="primary">assignment</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        <br>
+        <mat-card appearance="outlined">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title>Members ({{project.team.length}})</mat-card-title>
+                <button *ngIf="utilsService.getUserRole(connectedUser) > 0" mat-icon-button (click)="openAddMemberToProjectDialog()">
+                    <mat-icon color="accent">edit</mat-icon>
+                </button>
+            </div>
+            <mat-card-content>
+                <div style="padding:14px 0px" *ngIf="project">
+                    <div *ngFor="let member of project.team" class="member-avatar">
+                        <p class="member-avatar-inner">
+                            {{member!.firstName!.charAt(0) +
+                            member!.lastName!.charAt(0)}}
+                        </p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <mat-card appearance="outlined" fxFlex="40%">
+        <mat-card-title>Stats</mat-card-title>
+    </mat-card>
+</div>
+
+<app-access-unauthorized [display]="userNotAuthorized" [redirectUrlLabel]="'Projects'"
+    [redirectUrl]="'/projects'"></app-access-unauthorized>

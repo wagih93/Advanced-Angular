@@ -1,0 +1,8 @@
+<mat-nav-list *ngIf="showMenu">
+  <ng-container *ngFor="let item of routes">
+    <div class="sidenav-item" fxLayout="row" fxLayoutAlign="start center" *ngIf="item.data.show" mat-list-item [routerLinkActive]="'active'" [routerLink]="[item.path]">
+      <img class="menu-icon" [src]="item.data.icon" />
+      {{ item.data.text }}
+    </div>
+  </ng-container>
+</mat-nav-list>

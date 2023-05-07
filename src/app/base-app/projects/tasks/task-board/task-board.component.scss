@@ -1,0 +1,156 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: calc(100vh - 180px);
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.board-wrapper {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+}
+
+.board-columns {
+    display: flex;
+    flex-grow: 1;
+}
+
+.board-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+
+    max-width: 300px;
+    padding: 20px 16px;
+
+    border-right: 4px solid #e9e8e8;
+}
+
+.board-column:not(:first-child) {
+    margin-left: 0;
+}
+
+.add-taks-btn {
+    padding: 12px 16px;
+}
+
+.column-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+
+.tasks-container {
+    flex-grow: 1;
+    overflow-y: auto;
+
+}
+
+.task {
+    position: relative;
+    display: flex;
+    padding: 16px 12px;
+    background: white;
+    border-bottom: solid 1px #ddd;
+    border-left: solid 4px #3f51b5 !important;
+    border: 1px solid #ddd,;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
+        0 3px 14px 2px rgba(0, 0, 0, 0.05);
+    cursor: grab;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.mydivoverlap {
+    position: relative;
+    z-index: 1;
+}
+
+.mybuttonoverlap {
+    position: absolute;
+    z-index: 2;
+    top: 6px;
+    display: none;
+    right: 6px;
+    width: 30px;
+    height: 36px;
+    background-color: #eeeff6;
+    border-radius: 4px;
+}
+
+.task:hover .mybuttonoverlap {
+    display: block;
+}
+
+.task-title:hover {
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.state-badge {
+    padding: 2px 6px;
+    background-color: #3f51b5;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+}
+
+
+.circle {
+    display: inline-block;
+    background-color: #498359;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.circle-inner {
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    height: 30px;
+    width: 30px;
+    font-size: 12px;
+}
+
+
+::ng-deep .custom-actions-panel {
+    min-width: 200px !important;
+}
+
+.new-task {
+    border: none !important;
+    outline: none !important;
+}

@@ -1,0 +1,7 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="ml10">
+    <img width="40" src="/assets/icons/dashboard.png"/>
+    <span class="page-title">Dashboard</span>
+  </div>
+<h1 *ngIf="oidcSecurityService.userData$ | async as user">
+    Bonjour {{user?.userData?.name}}
+</h1>
