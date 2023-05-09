@@ -20,7 +20,7 @@ export class ManufacturingOrderService {
   ): Observable<any> {
     let params: any = {
       loadChildren: true,
-      isPagingEnabled: true,
+      isFiltering: false,
       page: page,
       pageSize: pageSize,
     };

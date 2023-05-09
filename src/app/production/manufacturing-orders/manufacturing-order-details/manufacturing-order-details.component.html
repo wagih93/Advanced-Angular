@@ -1,0 +1,56 @@
+<div class="details-title" fxLayout="row" fxLayoutAlign="space-between center">
+  <span>Consulter</span>
+  <button (click)="onDialogClose()" mat-icon-button matTooltip="Fermer" aria-label="Close Button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="details-container">
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Date :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">{{data?.created | date: "yyyy-MM-dd hh:mm"}}
+    </div>
+  </div>
+
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Lot :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.batchNumber}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Produit :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.product?.name}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Ligne :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.productionLine.name}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Groupe :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.team?.name}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Num Groupe</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.team.number}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Objectif :</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">{{data?.quantity}}
+    </div>
+  </div>
+  <div class="details-row" fxLayout="row" fxLayoutAlign="center center">
+    <div class="details-row-title" fxFill fxFlex="30" fxLayout="column" fxLayoutAlign="center center">Propriétaire</div>
+    <div class="details-row-value" fxFill fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+      {{data?.owner.name}}
+    </div>
+  </div>
+</div>

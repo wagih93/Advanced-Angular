@@ -2,7 +2,7 @@
   <div flexLayout="row" fxLayoutAlign="end center">
     <mat-form-field appearance="outline" fxFlex="25" class="search-input">
       <mat-icon matPrefix svgIcon="loop-icon"></mat-icon>
-      <input matInput placeholder="Rechercher" type="text" [(ngModel)]="searchInput" (input)="getManufacturingOrders()">
+      <input matInput placeholder="Rechercher" type="text" [(ngModel)]="searchInput" (input)="getManufacturingOrders(true)">
       <button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear"
         (click)="searchInput='';getManufacturingOrders()">
         <mat-icon>close</mat-icon>
@@ -12,8 +12,7 @@
   <div flexLayout="row" fxLayoutAlign="space-between center">
     <div fxLayout="row" fxLayoutAlign="start center">
       <span class="page-title">Suivi de la productivité</span>
-      <button class="toolbar-btn" mat-raised-button color="primary"
-        (click)="manageManufacturingOrder('new', undefined)">
+      <button class="toolbar-btn" mat-raised-button color="primary">
         Nouvel enregistrement
         <mat-icon>add_outline</mat-icon>
       </button>
@@ -27,7 +26,7 @@
       </button>
       <mat-menu #exportMenu="matMenu">
         <button (click)="saveExcel()" mat-menu-item>
-          <mat-icon svgIcon="export-icon"></mat-icon>
+          <mat-icon>description</mat-icon>
           <span>Exporter la page</span>
         </button>
 
@@ -45,7 +44,7 @@
       </button>
       <mat-menu #printMenu="matMenu">
         <button (click)="printData()" mat-menu-item>
-          <mat-icon svgIcon="export-icon"></mat-icon>
+          <mat-icon>description</mat-icon>
           <span>Imprimer la page</span>
         </button>
 
@@ -140,7 +139,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td class="text-right" mat-cell *matCellDef="let user">
-        <button mat-icon-button (click)="manageManufacturingOrder('edit', user)">
+        <button mat-icon-button>
           <mat-icon color="primery">edit</mat-icon>
         </button>
         <button *ngIf="user.userId != currentUser?.sub" mat-icon-button (click)="deleteManufacturingOrder(user)">
@@ -150,7 +149,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <tr mat-row (click)="manufacturingOrderDetails(row)" *matRowDef="let row; columns: displayedColumns;">
     </tr>
 
   </table>

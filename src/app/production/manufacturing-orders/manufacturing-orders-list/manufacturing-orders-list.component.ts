@@ -13,12 +13,13 @@ import { NotificationService } from 'src/shared/services/notification.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog } from '@angular/material/dialog';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { AddManufacturingOrderDialogComponent } from '../add-manufacturing-order-dialog/add-manufacturing-order-dialog.component';
 import { CustomConfirmDialogComponent } from 'src/shared/components/custom-confirm-dialog/custom-confirm-dialog.component';
 import * as XLSX from 'xlsx';
 import { Observable, from, mergeMap, of } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { FileSaverService } from 'ngx-filesaver';
+import { PrintDataComponent } from '../../shared/print-data/print-data.component';
+import { ManufacturingOrderDetailsComponent } from '../manufacturing-order-details/manufacturing-order-details.component';
 
 @Component({
   selector: 'app-manufacturing-orders-list',
@@ -80,7 +81,10 @@ export class ManufacturingOrdersListComponent implements OnInit {
     this.getManufacturingOrders();
   }
 
-  getManufacturingOrders(): void {
+  getManufacturingOrders(isSearch?: boolean): void {
+    if (isSearch) {
+      this.page = 1;
+    }
     this.loaderService.startBackground();
     this.manufacturingorderService
       .getPaginatedManufacturingOrders(
@@ -115,30 +119,6 @@ export class ManufacturingOrdersListComponent implements OnInit {
           this.loaderService.stopAll();
         },
       });
-  }
-
-  manageManufacturingOrder(
-    action: string,
-    manufacturingOrder?: ManufacturingOrder
-  ) {
-    this.selectedManufacturingOrder = manufacturingOrder;
-    const dialogRef = this._matDialog.open(
-      AddManufacturingOrderDialogComponent,
-      {
-        panelClass: 'manufacturingOrder-form-dialog',
-        data: {
-          action: action,
-          manufacturingOrder: this.selectedManufacturingOrder,
-        },
-        height: '95%',
-        position: { right: '40px', top: '20px' },
-      }
-    );
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data) {
-        this.getManufacturingOrders();
-      }
-    });
   }
 
   deleteManufacturingOrder(manufacturingOrder: ManufacturingOrder): void {
@@ -256,7 +236,13 @@ export class ManufacturingOrdersListComponent implements OnInit {
       this.fileSaverService.save(excelBlob, fileName, fileType);
     });
   }
-
+  OpenPrintDialog(flatManufacturingOrder?: FlatManufacturingOrder[]) {
+    const dialogRef = this._matDialog.open(PrintDataComponent, {
+      data: flatManufacturingOrder,
+      height: '95%',
+      autoFocus: false,
+    });
+  }
   printData(fromSelection?: boolean): void {
     let dataToPrint: Observable<FlatManufacturingOrder[]> | null = null;
     if (fromSelection) {
@@ -266,120 +252,7 @@ export class ManufacturingOrdersListComponent implements OnInit {
     }
 
     dataToPrint.subscribe((data: FlatManufacturingOrder[]) => {
-      const html = `
-      <html>
-        <head>
-          <title>Palmary Food</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-              margin-bottom: 1rem;
-              font-family: Arial, sans-serif;
-              font-size: 0.8rem;
-            }
-
-            th, td {
-              padding: 0.5rem;
-              text-align: left;
-              vertical-align: top;
-              border: 1px solid #dee2e6;
-            }
-
-            th {
-              background-color: #f5f5f5;
-              font-weight: bold;
-              text-transform: capitalize;
-            }
-
-            td {
-              border-color: #dee2e6;
-            }
-
-            button {
-              background-color: #007bff;
-              border: none;
-              color: #fff;
-              padding: 0.5rem 1rem;
-              border-radius: 0.25rem;
-              cursor: pointer;
-              font-size: 1rem;
-              margin: 0 auto;
-              display: block;
-            }
-
-            button svg {
-              width: 1rem;
-              height: 1rem;
-              margin-right: 0.5rem;
-            }
-
-            .button-container {
-              text-align: center;
-              margin-bottom: 1rem;
-            }
-
-            .title {
-              font-size: 1.5rem;
-              font-weight: bold;
-              margin-bottom: 1rem;
-            }
-
-            @media print {
-              button {
-                display: none;
-              }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="title">${'Ordres de fabrication'}</div>
-          <table>
-            <thead>
-              <tr>
-                ${Object.keys(data[0])
-                  .map(
-                    (key) => `
-                      <th>${key}</th>
-                    `
-                  )
-                  .join('')}
-              </tr>
-            </thead>
-
-            <tbody>
-              ${Array.from(data)
-                .map(
-                  (data) => `
-                    <tr>
-                      <td>${data.Date}</td>
-                      <td>${data.Lot}</td>
-                      <td>${data.Produit}</td>
-                      <td>${data.Ligne}</td>
-                      <td>${data.Groupe}</td>
-                      <td>${data.Num_Groupe}</td>
-                      <td>${data.Objectif}</td>
-                      <td>${data.Propriétaire}</td>
-                    </tr>
-                  `
-                )
-                .join('')}
-            </tbody>
-          </table>
-          <div class="button-container">
-          <button onclick="window.print()"><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 4H4V0H16V4ZM16 9.5C16.2833 9.5 16.521 9.404 16.713 9.212C16.905 9.02 17.0007 8.78267 17 8.5C17 8.21667 16.904 7.979 16.712 7.787C16.52 7.595 16.2827 7.49933 16 7.5C15.7167 7.5 15.479 7.596 15.287 7.788C15.095 7.98 14.9993 8.21733 15 8.5C15 8.78333 15.096 9.021 15.288 9.213C15.48 9.405 15.7173 9.50067 16 9.5ZM14 16V12H6V16H14ZM16 18H4V14H0V8C0 7.15 0.291667 6.43733 0.875 5.862C1.45833 5.28667 2.16667 4.99933 3 5H17C17.85 5 18.5627 5.28767 19.138 5.863C19.7133 6.43833 20.0007 7.15067 20 8V14H16V18Z" fill="white"/>
-          </svg>
-           Print</button>
-          </div>
-        </body>
-      </html>
-    `;
-      const popup = window.open();
-      if (popup) {
-        popup.document.write(html);
-        popup.document.close();
-      }
+      this.OpenPrintDialog(data);
     });
   }
 
@@ -412,5 +285,13 @@ export class ManufacturingOrdersListComponent implements OnInit {
   onFilterButtonClicked(event: Event) {
     event.stopPropagation();
     // Implement your filter logic here
+  }
+
+  manufacturingOrderDetails(manufacturingOrder?: ManufacturingOrder): void {
+    const dialogRef = this._matDialog.open(ManufacturingOrderDetailsComponent, {
+      data: manufacturingOrder,
+      width: '50%',
+      autoFocus: false,
+    });
   }
 }
